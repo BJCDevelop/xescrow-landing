@@ -210,7 +210,7 @@ export default function LandingPage() {
             onClick={login}
             className="bg-transparent border border-[#8B3DFF] text-[#8B3DFF] hover:bg-[#8B3DFF] hover:text-white transition-all"
           >
-            Iniciar sesión
+            Ir a la app
           </Button>
         </motion.div>
         
