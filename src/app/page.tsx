@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { usePrivy } from '@privy-io/react-auth';
 import { Button } from "@/app/components/ui/button";
 import { useState, useEffect } from 'react';
+import ico from '../ico.png';
+import Image from 'next/image';
+
 
 export default function LandingPage() {
   const { login } = usePrivy();
@@ -185,8 +188,8 @@ export default function LandingPage() {
           transition={{ duration: 0.5 }}
           className="flex items-center space-x-2"
         >
-          <div className="w-8 h-8 rounded-full bg-[#8B3DFF]"></div>
-          <span className="text-xl font-bold tracking-tight">Xescrow</span>
+        <Image src={ico} alt="Icon" width={32} height={32} className="rounded-full" />
+        <span className="text-xl font-bold tracking-tight">Xescrow</span>
         </motion.div>
         
         {/* Desktop Navigation */}
@@ -207,7 +210,7 @@ export default function LandingPage() {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <Button 
-            onClick={login}
+            //onClick={login}
             className="bg-transparent border border-[#8B3DFF] text-[#8B3DFF] hover:bg-[#8B3DFF] hover:text-white transition-all"
           >
             Ir a la app
@@ -217,7 +220,7 @@ export default function LandingPage() {
         {/* Mobile Menu Button */}
         <button 
           className="md:hidden text-gray-400 z-20"
-          onClick={() => setMenuOpen(!menuOpen)}
+          //onClick={() => setMenuOpen(!menuOpen)}
         >
           <div className="w-6 h-0.5 bg-current rounded mb-1.5"></div>
           <div className="w-6 h-0.5 bg-current rounded mb-1.5"></div>
@@ -233,7 +236,7 @@ export default function LandingPage() {
           >
             <button 
               className="absolute top-6 right-6 text-2xl"
-              onClick={() => setMenuOpen(false)}
+              //onClick={() => setMenuOpen(false)}
             >
               &times;
             </button>
@@ -241,7 +244,7 @@ export default function LandingPage() {
             <Link href="#jurado" className="text-2xl" onClick={() => setMenuOpen(false)}>Ser Jurado</Link>
             <Link href="#how-it-works" className="text-2xl" onClick={() => setMenuOpen(false)}>Cómo funciona</Link>
             <Button 
-              onClick={login}
+              //onClick={login}
               className="mt-8 bg-[#8B3DFF] text-white"
             >
               Iniciar sesión
@@ -321,7 +324,7 @@ export default function LandingPage() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Button 
-              onClick={login}
+              //onClick={login}
               className="bg-gradient-to-r from-[#8B3DFF] to-[#5FC8FF] text-white font-bold py-6 px-10 rounded-full text-lg transition duration-300 hover:shadow-lg hover:shadow-[#8B3DFF]/30"
             >
               Empezar gratis
@@ -446,7 +449,7 @@ export default function LandingPage() {
                 className="pt-6"
               >
                 <Button 
-                  onClick={login}
+                  //onClick={login}
                   className="bg-gradient-to-r from-[#8B3DFF] to-[#5FC8FF] text-white font-bold py-5 px-8 rounded-full text-lg transition duration-300 hover:shadow-lg hover:shadow-[#8B3DFF]/30"
                 >
                   Registrarse
@@ -708,7 +711,7 @@ export default function LandingPage() {
             Construyamos juntos una comunidad para hacer de esta plataforma una forma nueva de prestar tus servicios y conseguir los de otros.
           </p>
           <Button 
-            onClick={login}
+            //onClick={login}
             className="bg-gradient-to-r from-[#8B3DFF] to-[#5FC8FF] text-white font-bold py-6 px-10 rounded-full text-lg transition duration-300 hover:shadow-lg hover:shadow-[#8B3DFF]/30"
           >
             Crear cuenta gratis
@@ -721,7 +724,7 @@ export default function LandingPage() {
         <div className="flex flex-col md:flex-row justify-between">
           <div className="mb-8 md:mb-0">
             <div className="flex items-center space-x-2 mb-6">
-              <div className="w-8 h-8 rounded-full bg-[#8B3DFF]"></div>
+            <Image src={ico} alt="Icon" width={32} height={32} className="rounded-full" />
               <span className="text-xl font-bold">Xescrow</span>
             </div>
             <p className="text-gray-400 max-w-xs">
