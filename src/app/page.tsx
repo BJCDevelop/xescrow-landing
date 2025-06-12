@@ -8,7 +8,6 @@ import { useState, useEffect } from 'react';
 import ico from '../ico.png';
 import Image from 'next/image';
 
-
 export default function LandingPage() {
   const { login } = usePrivy();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -27,7 +26,6 @@ export default function LandingPage() {
   useEffect(() => {
     setIsClient(true);
     
-    // Generar partículas solo en el cliente
     const newParticles = Array.from({ length: 80 }, (_, i) => ({
       id: i,
       width: Math.random() * 30 + 10,
@@ -52,30 +50,48 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] text-white overflow-hidden">
-      {/* Explosión inicial de Xescrow */}
       <AnimatePresence>
         {exploding && (
           <motion.div 
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black"
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black"
             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.8 } }}
+            exit={{ 
+              opacity: 0, 
+              transition: { 
+                duration: 0.8,
+                when: "afterChildren"
+              } 
+            }}
           >
-            <motion.div
-              initial={{ scale: 0.2, opacity: 0 }}
-              animate={{ 
-                scale: [0.2, 1, 1.1, 1],
-                opacity: [0, 1, 1, 1],
-              }}
-              transition={{ 
-                duration: 2,
-                times: [0, 0.4, 0.8, 1]
-              }}
-              className="text-center"
-            >
+            <div className="flex flex-col items-center">
+              <motion.div
+                initial={{ scale: 0.2, opacity: 0 }}
+                animate={{ 
+                  scale: [0.2, 1, 1.1, 1],
+                  opacity: [0, 1, 1, 1],
+                }}
+                transition={{ 
+                  duration: 2,
+                  times: [0, 0.4, 0.8, 1]
+                }}
+                className="mt-[15vh]"
+              >
+                <Image 
+                  src={ico} 
+                  alt="Logo"
+                  width={280}
+                  height={280}
+                  className="w-64 h-64 md:w-80 md:h-80 object-contain"
+                />
+              </motion.div>
+
               <motion.h1 
-                className="text-[10rem] md:text-[18rem] font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#8B3DFF] via-[#6F5AFF] to-[#5FC8FF]"
-                animate={{
+                className="text-[6rem] md:text-[12rem] font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#8B3DFF] via-[#6F5AFF] to-[#5FC8FF]"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ 
+                  opacity: 1,
+                  scale: 1,
                   textShadow: [
                     "0 0 20px rgba(139, 61, 255, 0.5)",
                     "0 0 60px rgba(111, 90, 255, 0.8)",
@@ -86,74 +102,76 @@ export default function LandingPage() {
                   ]
                 }}
                 transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  repeatType: "reverse"
+                  opacity: { duration: 1.5 },
+                  scale: { duration: 1.5 },
+                  textShadow: {
+                    duration: 2.5,
+                    repeat: Infinity,
+                    repeatType: "reverse"
+                  }
                 }}
               >
                 Xescrow
               </motion.h1>
-              
-              <motion.div
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-                className="mt-8"
+            </div>
+
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              className="mt-8"
+            >
+              <motion.p 
+                className="text-2xl md:text-3xl text-gray-300"
+                animate={{
+                  textShadow: [
+                    "0 0 5px rgba(255, 255, 255, 0.2)",
+                    "0 0 15px rgba(111, 90, 255, 0.5)",
+                    "0 0 5px rgba(255, 255, 255, 0.2)"
+                  ]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
               >
-                <motion.p 
-                  className="text-2xl md:text-3xl text-gray-300"
-                  animate={{
-                    textShadow: [
-                      "0 0 5px rgba(255, 255, 255, 0.2)",
-                      "0 0 15px rgba(111, 90, 255, 0.5)",
-                      "0 0 5px rgba(255, 255, 255, 0.2)"
-                    ]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatType: "reverse"
-                  }}
-                >
-                  Contrata servicios con seguridad blockchain
-                </motion.p>
-              </motion.div>
-              
-              {/* Partículas explosivas */}
-              {isClient && particles.map((particle) => (
-                <motion.div
-                  key={particle.id}
-                  className="absolute rounded-full"
-                  initial={{ 
-                    x: 0, 
-                    y: 0, 
-                    scale: 0,
-                    opacity: 1
-                  }}
-                  animate={{ 
-                    x: particle.x, 
-                    y: particle.y,
-                    scale: particle.scale,
-                    opacity: 0
-                  }}
-                  transition={{ 
-                    duration: 3,
-                    delay: Math.random() * 0.7,
-                    ease: "easeOut"
-                  }}
-                  style={{
-                    width: `${particle.width}px`,
-                    height: `${particle.height}px`,
-                    background: particle.background
-                  }}
-                />
-              ))}
+                Hire services with blockchain security
+              </motion.p>
             </motion.div>
+            
+            {isClient && particles.map((particle) => (
+              <motion.div
+                key={particle.id}
+                className="absolute rounded-full"
+                initial={{ 
+                  x: 0, 
+                  y: 0, 
+                  scale: 0,
+                  opacity: 1
+                }}
+                animate={{ 
+                  x: particle.x, 
+                  y: particle.y,
+                  scale: particle.scale,
+                  opacity: 0
+                }}
+                transition={{ 
+                  duration: 3,
+                  delay: Math.random() * 0.7,
+                  ease: "easeOut"
+                }}
+                style={{
+                  width: `${particle.width}px`,
+                  height: `${particle.height}px`,
+                  background: particle.background
+                }}
+              />
+            ))}
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Floating Particles */}
       {isClient && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {[...Array(15)].map((_, i) => (
@@ -180,7 +198,6 @@ export default function LandingPage() {
         </div>
       )}
       
-      {/* Navigation */}
       <nav className="container mx-auto px-4 py-6 flex justify-between items-center relative z-10">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -188,20 +205,19 @@ export default function LandingPage() {
           transition={{ duration: 0.5 }}
           className="flex items-center space-x-2"
         >
-        <Image src={ico} alt="Icon" width={32} height={32} className="rounded-full" />
-        <span className="text-xl font-bold tracking-tight">Xescrow</span>
+          <Image src={ico} alt="Icon" width={32} height={32} className="rounded-full" />
+          <span className="text-xl font-bold tracking-tight">Xescrow</span>
         </motion.div>
         
-        {/* Desktop Navigation */}
         <motion.div 
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="hidden md:flex space-x-8"
         >
-          <Link href="#features" className="text-gray-400 hover:text-white transition">Características</Link>
-          <Link href="#jurado" className="text-gray-400 hover:text-white transition">Ser Jurado</Link>
-          <Link href="#how-it-works" className="text-gray-400 hover:text-white transition">Cómo funciona</Link>
+          <Link href="#features" className="text-gray-400 hover:text-white transition">Features</Link>
+          <Link href="#jurado" className="text-gray-400 hover:text-white transition MEMBER OF THE JURY">Be a Juror</Link>
+          <Link href="#how-it-works" className="text-gray-400 hover:text-white transition">How it works</Link>
         </motion.div>
         
         <motion.div
@@ -213,11 +229,10 @@ export default function LandingPage() {
             //onClick={login}
             className="bg-transparent border border-[#8B3DFF] text-[#8B3DFF] hover:bg-[#8B3DFF] hover:text-white transition-all"
           >
-            Ir a la app
+            Go to the app
           </Button>
         </motion.div>
         
-        {/* Mobile Menu Button */}
         <button 
           className="md:hidden text-gray-400 z-20"
           //onClick={() => setMenuOpen(!menuOpen)}
@@ -227,7 +242,6 @@ export default function LandingPage() {
           <div className="w-4 h-0.5 bg-current rounded"></div>
         </button>
         
-        {/* Mobile Menu */}
         {menuOpen && (
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
@@ -238,22 +252,21 @@ export default function LandingPage() {
               className="absolute top-6 right-6 text-2xl"
               //onClick={() => setMenuOpen(false)}
             >
-              &times;
+              ×
             </button>
-            <Link href="#features" className="text-2xl" onClick={() => setMenuOpen(false)}>Características</Link>
-            <Link href="#jurado" className="text-2xl" onClick={() => setMenuOpen(false)}>Ser Jurado</Link>
-            <Link href="#how-it-works" className="text-2xl" onClick={() => setMenuOpen(false)}>Cómo funciona</Link>
+            <Link href="#features" className="text-2xl" onClick={() => setMenuOpen(false)}>Features</Link>
+            <Link href="#jurado" className="text-2xl" onClick={() => setMenuOpen(false)}>Be a Juror</Link>
+            <Link href="#how-it-works" className="text-2xl" onClick={() => setMenuOpen(false)}>How it works</Link>
             <Button 
               //onClick={login}
               className="mt-8 bg-[#8B3DFF] text-white"
             >
-              Iniciar sesión
+              Log in
             </Button>
           </motion.div>
         )}
       </nav>
 
-      {/* Hero Section */}
       <motion.section 
         className="container mx-auto px-4 py-32 flex flex-col items-center text-center relative z-10"
         initial={{ opacity: 0 }}
@@ -272,7 +285,7 @@ export default function LandingPage() {
             transition={{ delay: 0.5 }}
             className="text-[#8B3DFF] text-sm font-medium mb-6 tracking-widest"
           >
-            SERVICIOS DESCENTRALIZADOS
+            DECENTRALIZED SERVICES
           </motion.div>
           
           <motion.h1
@@ -304,7 +317,7 @@ export default function LandingPage() {
                 repeatType: "reverse"
               }}
             >
-              Contrata servicios con seguridad blockchain
+              Hire services with blockchain security
             </motion.span>
           </motion.h1>
           
@@ -314,7 +327,7 @@ export default function LandingPage() {
             transition={{ delay: 0.8 }}
             className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto"
           >
-            Xescr0w protege tus transacciones con contratos inteligentes y resolución de disputas por jurados independientes.
+            Xescr0w protects your transactions with smart contracts and dispute resolution by independent jurors.
           </motion.p>
           
           <motion.div
@@ -327,21 +340,20 @@ export default function LandingPage() {
               //onClick={login}
               className="bg-gradient-to-r from-[#8B3DFF] to-[#5FC8FF] text-white font-bold py-6 px-10 rounded-full text-lg transition duration-300 hover:shadow-lg hover:shadow-[#8B3DFF]/30"
             >
-              Empezar gratis
+              Get started for free
             </Button>
             <Link href="#jurado">
               <Button 
                 variant="outline" 
                 className="bg-transparent border-2 border-gray-700 text-gray-300 hover:bg-gray-800 hover:border-gray-600 hover:text-white font-bold py-6 px-8 rounded-full text-lg transition"
               >
-                Ser Jurado
+                Be a Juror
               </Button>
             </Link>
           </motion.div>
         </motion.div>
       </motion.section>
 
-      {/* Features Section */}
       <section id="features" className="container mx-auto px-4 py-16 relative z-10">
         <div className="text-center mb-16">
           <motion.div
@@ -350,7 +362,7 @@ export default function LandingPage() {
             transition={{ duration: 0.5 }}
             className="text-[#8B3DFF] text-sm font-medium mb-4 tracking-widest"
           >
-            CARACTERÍSTICAS PRINCIPALES
+            MAIN FEATURES
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
@@ -358,7 +370,7 @@ export default function LandingPage() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-4xl font-bold mb-4"
           >
-            Simplificamos los servicios digitales
+            We simplify digital services
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -366,25 +378,25 @@ export default function LandingPage() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="text-gray-400 max-w-2xl mx-auto"
           >
-            Una plataforma diseñada para proteger a clientes y proveedores con tecnología blockchain. 
+            A platform designed to protect clients and providers with blockchain technology.
           </motion.p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
-              title: "Pagos seguros",
-              description: "Tu dinero queda protegido en un contrato inteligente hasta que el servicio sea completado satisfactoriamente.",
+              title: "Secure payments",
+              description: "Your money is protected in a smart contract until the service is satisfactorily completed.",
               icon: "🔒"
             },
             {
-              title: "Disputas justas",
-              description: "Conflictos resueltos por jurados independientes seleccionados aleatoriamente.",
+              title: "Fair disputes",
+              description: "Conflicts resolved by independent jurors selected randomly.",
               icon: "⚖️"
             },
             {
-              title: "Sin intermediarios",
-              description: "Conectamos directamente a clientes y proveedores eliminando comisiones innecesarias.",
+              title: "No intermediaries",
+              description: "We connect clients and providers directly, eliminating unnecessary commissions.",
               icon: "🔗"
             }
           ].map((feature, index) => (
@@ -404,7 +416,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Jurado Section 1: ¿Querés ser jurado? */}
       <section id="jurado" className="container mx-auto px-4 py-32 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <motion.div
@@ -414,11 +425,11 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="lg:w-1/2"
           >
-            <div className="text-[#8B3DFF] text-sm font-medium mb-4 tracking-widest">OPORTUNIDAD ÚNICA</div>
+            <div className="text-[#8B3DFF] text-sm font-medium mb-4 tracking-widest">UNIQUE OPPORTUNITY</div>
             <h2 className="text-4xl font-bold mb-6">
-              ¿Conocías Xescrow? 
+              Did you know Xescrow?
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#8B3DFF] to-[#5FC8FF] mt-2">
-                ¡100% transparente, sin intermediarios!
+                100% transparent, no intermediaries!
               </span>
             </h2>
             
@@ -429,8 +440,8 @@ export default function LandingPage() {
                 transition={{ delay: 0.2 }}
                 className="text-xl text-gray-300"
               >
-                Gracias a la red de Mantle, Xescrow podra gozar de transacciones económicas. 
-                <span className="text-[#8B3DFF] font-medium"> ¡También podés ganar vos si te sumas!</span>
+                Thanks to the Mantle network, Xescrow will enjoy economical transactions.
+                <span className="text-[#8B3DFF] font-medium"> You can also earn if you join!</span>
               </motion.p>
               
               <motion.p
@@ -439,7 +450,7 @@ export default function LandingPage() {
                 transition={{ delay: 0.3 }}
                 className="text-gray-400"
               >
-                Ayudá a Xescrow a ser una plataforma que fomenta la decentralización y generar un cambio a un sistema Web3. Sumate al nuevo mercado libre decentralizado.
+                Help Xescrow be a platform that promotes decentralization and generates a change to a Web3 system. Join the new decentralized free market.
               </motion.p>
               
               <motion.div
@@ -452,7 +463,7 @@ export default function LandingPage() {
                   //onClick={login}
                   className="bg-gradient-to-r from-[#8B3DFF] to-[#5FC8FF] text-white font-bold py-5 px-8 rounded-full text-lg transition duration-300 hover:shadow-lg hover:shadow-[#8B3DFF]/30"
                 >
-                  Registrarse
+                  Sign up
                 </Button>
               </motion.div>
             </div>
@@ -475,8 +486,8 @@ export default function LandingPage() {
                     <div className="text-3xl">👑</div>
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold">Beneficios de ser Jurado</h3>
-                    <p className="text-gray-400">Ganá mientras contribuís a la comunidad</p>
+                    <h3 className="text-2xl font-bold">Benefits of being a Juror</h3>
+                    <p className="text-gray-400">Earn while contributing to the community</p>
                   </div>
                 </div>
                 
@@ -484,23 +495,23 @@ export default function LandingPage() {
                   {[
                     { 
                       icon: "💰", 
-                      title: "Ganancias por disputa", 
-                      description: "Recibí una comisión por cada disputa que resuelvas" 
+                      title: "Earnings per dispute", 
+                      description: "Receive a commission for each dispute you resolve" 
                     },
                     { 
                       icon: "🕒", 
-                      title: "Flexibilidad total", 
-                      description: "Participá cuando quieras, sin horarios fijos" 
+                      title: "Total flexibility", 
+                      description: "Participate whenever you want, without fixed schedules" 
                     },
                     { 
                       icon: "🌐", 
-                      title: "Desde cualquier lugar", 
-                      description: "Resolvé disputas desde tu computadora o móvil" 
+                      title: "From anywhere", 
+                      description: "Resolve disputes from your computer or mobile" 
                     },
                     { 
                       icon: "📈", 
-                      title: "Crece tu reputación", 
-                      description: "Mejorá tu puntuación a medida que ayudas a resolver" 
+                      title: "Grow your reputation", 
+                      description: "Improve your score as you help resolve" 
                     }
                   ].map((item, index) => (
                     <div key={index} className="flex items-start">
@@ -518,7 +529,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Jurado Section 2: ¿Qué es ser jurado? */}
       <section className="container mx-auto px-4 py-32 bg-gradient-to-br from-[#0f172a] to-[#1e293b] rounded-3xl relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
@@ -527,7 +537,7 @@ export default function LandingPage() {
             transition={{ duration: 0.5 }}
             className="text-[#8B3DFF] text-sm font-medium mb-4 tracking-widest"
           >
-            EL ROL DEL JURADO
+            THE ROLE OF THE JUROR
           </motion.div>
           
           <motion.h2
@@ -536,7 +546,7 @@ export default function LandingPage() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-4xl font-bold mb-8"
           >
-            ¿Qué es ser jurado en Xescr0w?
+            What is being a juror in Xescr0w?
           </motion.h2>
           
           <motion.div
@@ -546,32 +556,32 @@ export default function LandingPage() {
             className="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 mb-12 text-left"
           >
             <p className="text-xl mb-6">
-              Es aquel que, en caso de disputa, ayuda a determinar un ganador mediante un proceso justo y transparente:
+              It is the one who, in case of a dispute, helps determine a winner through a fair and transparent process:
             </p>
             
             <ul className="space-y-4">
               <li className="flex items-start">
                 <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#8B3DFF] flex items-center justify-center mt-1 mr-3">1</div>
                 <p>
-                  <span className="font-bold">Selección de dos jurados:</span> Primero se eligen dos jurados para evaluar la disputa
+                  <span className="font-bold">Selection of two jurors:</span> First, two jurors are chosen to evaluate the dispute
                 </p>
               </li>
               <li className="flex items-start">
                 <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#8B3DFF] flex items-center justify-center mt-1 mr-3">2</div>
                 <p>
-                  <span className="font-bold">Resolución inicial:</span> Si ambos jurados están de acuerdo, la disputa se resuelve
+                  <span className="font-bold">Initial resolution:</span> If both jurors agree, the dispute is resolved
                 </p>
               </li>
               <li className="flex items-start">
                 <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#8B3DFF] flex items-center justify-center mt-1 mr-3">3</div>
                 <p>
-                  <span className="font-bold">Desempate con tercer jurado:</span> Si hay empate, un tercer jurado tiene el voto final
+                  <span className="font-bold">Tiebreaker with third juror:</span> If there is a tie, a third juror has the final vote
                 </p>
               </li>
               <li className="flex items-start">
                 <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#8B3DFF] flex items-center justify-center mt-1 mr-3">4</div>
                 <p>
-                  <span className="font-bold">Resultado definitivo:</span> La resolución se dicta y todas las partes involucradas reciben lo que les corresponde
+                  <span className="font-bold">Definitive result:</span> The resolution is issued and all involved parties receive what corresponds to them
                 </p>
               </li>
             </ul>
@@ -584,18 +594,15 @@ export default function LandingPage() {
             className="max-w-2xl mx-auto"
           >
             <div className="bg-[#8B3DFF]/10 border border-[#8B3DFF]/30 rounded-xl p-6">
-              <h3 className="text-xl font-bold mb-3">La filosofía detrás del jurado</h3>
+              <h3 className="text-xl font-bold mb-3">The philosophy behind the juror</h3>
               <p className="text-gray-300">
-                "La opción de jurado hace que la plataforma no tome control de una disputa, 
-                sino que sea la comunidad quien asuma ese rol. Esto garantiza decisiones 
-                imparciales y descentralizadas."
+                "The juror option ensures that the platform does not take control of a dispute, but rather the community assumes that role. This guarantees impartial and decentralized decisions."
               </p>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* How It Works */}
       <section id="how-it-works" className="container mx-auto px-4 py-32 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <motion.div
@@ -605,18 +612,18 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="lg:w-1/2"
           >
-            <div className="text-[#8B3DFF] text-sm font-medium mb-4 tracking-widest">CÓMO FUNCIONA</div>
-            <h2 className="text-4xl font-bold mb-6">Proceso simple en 4 pasos</h2>
+            <div className="text-[#8B3DFF] text-sm font-medium mb-4 tracking-widest">HOW IT WORKS</div>
+            <h2 className="text-4xl font-bold mb-6">Simple 4-step process</h2>
             <p className="text-gray-400 mb-8">
-              Desde la contratación hasta la resolución de disputas, nuestro sistema garantiza transparencia y seguridad en cada etapa.
+              From hiring to dispute resolution, our system guarantees transparency and security at every stage.
             </p>
             
             <div className="space-y-8">
               {[
-                { step: "01", title: "Crear oferta", description: "El proveedor publica un servicio con condiciones claras" },
-                { step: "02", title: "Aceptar y pagar", description: "El cliente acepta y deposita el pago en el contrato inteligente" },
-                { step: "03", title: "Completar servicio", description: "El proveedor completa el servicio y notifica al sistema" },
-                { step: "04", title: "Confirmar o disputar", description: "El cliente confirma o inicia una disputa para resolverse por jurados" }
+                { step: "01", title: "Create offer", description: "The provider publishes a service with clear conditions" },
+                { step: "02", title: "Accept and pay", description: "The client accepts and deposits the payment in the smart contract" },
+                { step: "03", title: "Complete service", description: "The provider completes the service and notifies the system" },
+                { step: "04", title: "Confirm or dispute", description: "The client confirms or initiates a dispute to be resolved by jurors" }
               ].map((step, index) => (
                 <motion.div 
                   key={index}
@@ -650,8 +657,8 @@ export default function LandingPage() {
                 <div className="space-y-6">
                   <div className="flex justify-between items-center pb-6 border-b border-gray-800">
                     <div>
-                      <div className="text-lg font-bold">Crear nueva oferta</div>
-                      <div className="text-gray-400 text-sm">Publica un servicio para clientes</div>
+                      <div className="text-lg font-bold">Create new offer</div>
+                      <div className="text-gray-400 text-sm">Publish a service for clients</div>
                     </div>
                     <div className="w-10 h-10 rounded-full bg-[#8B3DFF]/10 flex items-center justify-center">
                       <div className="w-3 h-3 bg-[#8B3DFF] rounded-full"></div>
@@ -660,12 +667,12 @@ export default function LandingPage() {
                   
                   <div className="space-y-4">
                     <div>
-                      <div className="text-gray-400 text-sm mb-2">Título del servicio</div>
+                      <div className="text-gray-400 text-sm mb-2">Service title</div>
                       <div className="h-4 bg-gray-800 rounded w-3/4"></div>
                     </div>
                     
                     <div>
-                      <div className="text-gray-400 text-sm mb-2">Descripción</div>
+                      <div className="text-gray-400 text-sm mb-2">Description</div>
                       <div className="h-3 bg-gray-800 rounded w-full mb-2"></div>
                       <div className="h-3 bg-gray-800 rounded w-5/6 mb-2"></div>
                       <div className="h-3 bg-gray-800 rounded w-2/3"></div>
@@ -673,11 +680,11 @@ export default function LandingPage() {
                     
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <div className="text-gray-400 text-sm mb-2">Precio (Mantle)</div>
+                        <div className="text-gray-400 text-sm mb-2">Price (Mantle)</div>
                         <div className="h-4 bg-gray-800 rounded w-16"></div>
                       </div>
                       <div>
-                        <div className="text-gray-400 text-sm mb-2">Tiempo de entrega</div>
+                        <div className="text-gray-400 text-sm mb-2">Delivery time</div>
                         <div className="h-4 bg-gray-800 rounded w-24"></div>
                       </div>
                     </div>
@@ -685,7 +692,7 @@ export default function LandingPage() {
                   
                   <div className="pt-6 border-t border-gray-800 flex justify-end">
                     <div className="bg-[#8B3DFF] text-white px-6 py-2.5 rounded-lg text-sm">
-                      Publicar oferta
+                      Publish offer
                     </div>
                   </div>
                 </div>
@@ -695,7 +702,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="container mx-auto px-4 py-32 text-center relative z-10">
         <motion.div
           initial={{ opacity: 0 }}
@@ -703,59 +709,58 @@ export default function LandingPage() {
           transition={{ duration: 1 }}
           className="max-w-3xl mx-auto"
         >
-          <div className="text-[#8B3DFF] text-sm font-medium mb-4 tracking-widest">ÚNETE AHORA</div>
+          <div className="text-[#8B3DFF] text-sm font-medium mb-4 tracking-widest">JOIN NOW</div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Protege tus transacciones de servicios
+            Protect your service transactions
           </h2>
           <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-            Construyamos juntos una comunidad para hacer de esta plataforma una forma nueva de prestar tus servicios y conseguir los de otros.
+            Let's build together a community to make this platform a new way to offer your services and get those of others.
           </p>
           <Button 
             //onClick={login}
             className="bg-gradient-to-r from-[#8B3DFF] to-[#5FC8FF] text-white font-bold py-6 px-10 rounded-full text-lg transition duration-300 hover:shadow-lg hover:shadow-[#8B3DFF]/30"
           >
-            Crear cuenta gratis
+            Create free account
           </Button>
         </motion.div>
       </section>
 
-      {/* Footer */}
       <footer className="container mx-auto px-4 py-12 relative z-10 border-t border-gray-800">
         <div className="flex flex-col md:flex-row justify-between">
           <div className="mb-8 md:mb-0">
             <div className="flex items-center space-x-2 mb-6">
-            <Image src={ico} alt="Icon" width={32} height={32} className="rounded-full" />
+              <Image src={ico} alt="Icon" width={32} height={32} className="rounded-full" />
               <span className="text-xl font-bold">Xescrow</span>
             </div>
             <p className="text-gray-400 max-w-xs">
-              Plataforma descentralizada para contratación segura de servicios digitales.
+              Decentralized platform for secure hiring of digital services.
             </p>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-lg font-bold mb-4">Producto</h3>
+              <h3 className="text-lg font-bold mb-4">Product</h3>
               <ul className="space-y-2 text-gray-400">
-                <li><Link href="#" className="hover:text-white transition">Características</Link></li>
-                <li><Link href="#" className="hover:text-white transition">Soluciones</Link></li>
-                <li><Link href="#" className="hover:text-white transition">Precios</Link></li>
+                <li><Link href="#" className="hover:text-white transition">Features</Link></li>
+                <li><Link href="#" className="hover:text-white transition">Solutions</Link></li>
+                <li><Link href="#" className="hover:text-white transition">Pricing</Link></li>
               </ul>
             </div>
             
             <div>
-              <h3 className="text-lg font-bold mb-4">Recursos</h3>
+              <h3 className="text-lg font-bold mb-4">Resources</h3>
               <ul className="space-y-2 text-gray-400">
                 <li><Link href="#" className="hover:text-white transition">Blog</Link></li>
-                <li><Link href="#" className="hover:text-white transition">Documentación</Link></li>
-                <li><Link href="#" className="hover:text-white transition">Soporte</Link></li>
+                <li><Link href="#" className="hover:text-white transition">Documentation</Link></li>
+                <li><Link href="#" className="hover:text-white transition">Support</Link></li>
               </ul>
             </div>
             
             <div>
               <h3 className="text-lg font-bold mb-4">Legal</h3>
               <ul className="space-y-2 text-gray-400">
-                <li><Link href="#" className="hover:text-white transition">Términos</Link></li>
-                <li><Link href="#" className="hover:text-white transition">Privacidad</Link></li>
+                <li><Link href="#" className="hover:text-white transition">Terms</Link></li>
+                <li><Link href="#" className="hover:text-white transition">Privacy</Link></li>
                 <li><Link href="#" className="hover:text-white transition">Cookies</Link></li>
               </ul>
             </div>
@@ -763,7 +768,7 @@ export default function LandingPage() {
         </div>
         
         <div className="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500">
-          <p>© {new Date().getFullYear()} Xescr0w. Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} Xescr0w. All rights reserved.</p>
         </div>
       </footer>
     </div>
