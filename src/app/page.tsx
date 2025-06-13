@@ -216,7 +216,7 @@ export default function LandingPage() {
           className="hidden md:flex space-x-8"
         >
           <Link href="#features" className="text-gray-400 hover:text-white transition">Features</Link>
-          <Link href="#jurado" className="text-gray-400 hover:text-white transition MEMBER OF THE JURY">Be a Juror</Link>
+          <Link href="#jurado" className="text-gray-400 hover:text-white transition">Be a Juror</Link>
           <Link href="#how-it-works" className="text-gray-400 hover:text-white transition">How it works</Link>
         </motion.div>
         
@@ -226,7 +226,7 @@ export default function LandingPage() {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <Button 
-            //onClick={login}
+            onClick={login}
             className="bg-transparent border border-[#8B3DFF] text-[#8B3DFF] hover:bg-[#8B3DFF] hover:text-white transition-all"
           >
             Go to the app
@@ -235,7 +235,7 @@ export default function LandingPage() {
         
         <button 
           className="md:hidden text-gray-400 z-20"
-          //onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => setMenuOpen(!menuOpen)}
         >
           <div className="w-6 h-0.5 bg-current rounded mb-1.5"></div>
           <div className="w-6 h-0.5 bg-current rounded mb-1.5"></div>
@@ -250,7 +250,7 @@ export default function LandingPage() {
           >
             <button 
               className="absolute top-6 right-6 text-2xl"
-              //onClick={() => setMenuOpen(false)}
+              onClick={() => setMenuOpen(false)}
             >
               ×
             </button>
@@ -258,7 +258,10 @@ export default function LandingPage() {
             <Link href="#jurado" className="text-2xl" onClick={() => setMenuOpen(false)}>Be a Juror</Link>
             <Link href="#how-it-works" className="text-2xl" onClick={() => setMenuOpen(false)}>How it works</Link>
             <Button 
-              //onClick={login}
+              onClick={() => {
+                login();
+                setMenuOpen(false);
+              }}
               className="mt-8 bg-[#8B3DFF] text-white"
             >
               Log in
@@ -337,7 +340,7 @@ export default function LandingPage() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Button 
-              //onClick={login}
+              onClick={login}
               className="bg-gradient-to-r from-[#8B3DFF] to-[#5FC8FF] text-white font-bold py-6 px-10 rounded-full text-lg transition duration-300 hover:shadow-lg hover:shadow-[#8B3DFF]/30"
             >
               Get started for free
@@ -460,7 +463,7 @@ export default function LandingPage() {
                 className="pt-6"
               >
                 <Button 
-                  //onClick={login}
+                  onClick={login}
                   className="bg-gradient-to-r from-[#8B3DFF] to-[#5FC8FF] text-white font-bold py-5 px-8 rounded-full text-lg transition duration-300 hover:shadow-lg hover:shadow-[#8B3DFF]/30"
                 >
                   Sign up
@@ -596,7 +599,7 @@ export default function LandingPage() {
             <div className="bg-[#8B3DFF]/10 border border-[#8B3DFF]/30 rounded-xl p-6">
               <h3 className="text-xl font-bold mb-3">The philosophy behind the juror</h3>
               <p className="text-gray-300">
-                "The juror option ensures that the platform does not take control of a dispute, but rather the community assumes that role. This guarantees impartial and decentralized decisions."
+                &quot;The juror option ensures that the platform does not take control of a dispute, but rather the community assumes that role. This guarantees impartial and decentralized decisions.&quot;
               </p>
             </div>
           </motion.div>
@@ -714,10 +717,10 @@ export default function LandingPage() {
             Protect your service transactions
           </h2>
           <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-            Let's build together a community to make this platform a new way to offer your services and get those of others.
+            Let&apos;s build together a community to make this platform a new way to offer your services and get those of others.
           </p>
           <Button 
-            //onClick={login}
+            onClick={login}
             className="bg-gradient-to-r from-[#8B3DFF] to-[#5FC8FF] text-white font-bold py-6 px-10 rounded-full text-lg transition duration-300 hover:shadow-lg hover:shadow-[#8B3DFF]/30"
           >
             Create free account
